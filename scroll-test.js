@@ -2,7 +2,8 @@ const playwright = require('playwright-core');
 (async() => {
     const browser = await playwright.chromium.launch({
         channel: 'msedge',
-        headless: false
+        headless: false,
+        ignoreDefaultArgs: ['--hide-scrollbars']
     });
     const context = await browser.newContext({ viewport: null });
     const page = await context.newPage();
