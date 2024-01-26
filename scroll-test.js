@@ -7,8 +7,9 @@ const playwright = require('playwright-core');
     });
     const context = await browser.newContext({ viewport: null });
     const page = await context.newPage();
+    let actionIdx = 1;
     page.on('domcontentloaded', async(p) => {
-        const screenshotAction = 'screenshotAction';
+        const screenshotAction = `screenshotAction_${actionIdx}`;
         await p.exposeFunction(screenshotAction, async() => {
             await p.screenshot({ path: `scroll-bug-screenshot.png`, fullPage: true });
         });
@@ -18,5 +19,6 @@ const playwright = require('playwright-core');
                 await window.${screenshotAction}();
             });
         })()`);
+        actionIdx++;
     });
 })();
